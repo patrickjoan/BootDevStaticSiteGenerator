@@ -130,7 +130,6 @@ class TestLeafNode(unittest.TestCase):
         # Verify it includes all important parts
         self.assertIn("tag='p'", repr_str)
         self.assertIn("value='Hello'", repr_str)
-        self.assertIn("children=[]", repr_str)
         self.assertIn("props={'class': 'greeting'}", repr_str)
 
 
