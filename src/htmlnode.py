@@ -1,3 +1,5 @@
+VOID_ELEMENTS = {"img", "input", "br", "hr", "meta", "link", "area", "base", "col", "embed", "source", "track", "wbr"}
+
 class HTMLNode:
     def __init__(self, tag=None, value=None, children=None, props=None) -> None:
         self.tag = tag
@@ -21,26 +23,23 @@ class HTMLNode:
 
 
 class LeafNode(HTMLNode):
-    def __init__(self, value, tag=None, props=None) -> None:
-        super().__init__(tag, value, [], props)
-
+    def __init__(self, value, tag, props=None) -> None:
         if value is None:
             raise ValueError("Value is required for LeafNode")
+        super().__init__(tag, value, [], props)
+        
 
     def to_html(self):
         if self.value is None:
             raise ValueError("All leaf nodes must have a value")
 
-        if not self.tag:
-            return str(self.value)
-
-        props_html = self.props_to_html()
+        if self.tag is None:
+            return self.value
         
         # Special case for void elements like img
-        if self.tag == "img":
+        props_html = self.props_to_html()
+        if self.tag in VOID_ELEMENTS:
             return f"<{self.tag}{props_html}>"
-        
-        # Normal case for regular elements
         return f"<{self.tag}{props_html}>{self.value}</{self.tag}>"
 
     def __repr__(self) -> str:
