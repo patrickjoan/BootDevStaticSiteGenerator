@@ -117,10 +117,9 @@ class TestLeafNode(unittest.TestCase):
         self.assertEqual(node.to_html(), "Raw text")
 
     def test_leaf_to_html_empty_value(self):
-        # Test that empty value raises an error
+        # Test that empty value is allowed
         node = LeafNode("", "p")
-        with self.assertRaises(ValueError):
-            node.to_html()
+        self.assertEqual(node.to_html(), "<p></p>")
 
     def test_leaf_repr(self):
         # Test the string representation

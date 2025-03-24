@@ -28,13 +28,19 @@ class LeafNode(HTMLNode):
             raise ValueError("Value is required for LeafNode")
 
     def to_html(self):
-        if not self.value:
+        if self.value is None:
             raise ValueError("All leaf nodes must have a value")
 
         if not self.tag:
             return str(self.value)
 
         props_html = self.props_to_html()
+        
+        # Special case for void elements like img
+        if self.tag == "img":
+            return f"<{self.tag}{props_html}>"
+        
+        # Normal case for regular elements
         return f"<{self.tag}{props_html}>{self.value}</{self.tag}>"
 
     def __repr__(self) -> str:
