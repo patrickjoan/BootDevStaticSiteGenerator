@@ -2,7 +2,7 @@ from htmlnode import LeafNode
 from textnode import TextNode, TextType
 
 
-def text_node_to_html_node(text_node):
+def text_node_to_html_node(text_node) -> LeafNode:
     if not isinstance(text_node, TextNode):
         raise TypeError("Expected a TextNode object")
 
